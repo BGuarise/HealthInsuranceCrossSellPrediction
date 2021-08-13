@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import joblib
 
-import logging
-
 # Function to transform collums with values between few string named classes into integers 
 def string_to_bool(data, collum_name, shifft):
 	labels = data[collum_name].unique()
@@ -14,7 +12,7 @@ def string_to_bool(data, collum_name, shifft):
 # Function to transform collums with values disperce in  several string named classes into one-hot-encode representation
 def one_hot_state(data, collum_name, all_values):
 	one_hot = pd.get_dummies(data[collum_name], prefix= collum_name)
-	one_hot = one_hot.T.reindex(all_values).T.fillna(0)
+	one_hot = one_hot.T.reindex(all_values).T.fillna(0) #This line fills possible collums os the one-hot-encode that doesn't appear in the data
 	data.drop(collum_name, axis = 1)
 	data = data.join(one_hot)
 	return data

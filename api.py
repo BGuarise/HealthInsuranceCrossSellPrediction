@@ -5,24 +5,20 @@ import pandas as pd
 import numpy as np
 import utils as ut
 
-import logging
-
 app = Flask(__name__)
 
 @app.route('/')
 def index():
 	return 'Hello!\nUse /predict to get models prediction'
 
+# Prediction Method
 @app.route('/predict', methods=['POST'])
 def predict():
     if model:
         try:
             json_ = request.json
-            #logging.warning(json_)
             query = pd.read_json(json_)
-            logging.warning(query)
             query = ut.data_transformation(query)
-            logging.warning(query)
             prediction = list(model.predict(query))
 
             return jsonify({'prediction': str(prediction)})
